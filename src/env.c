@@ -31,17 +31,13 @@ static int l_import(lua_State *L)
 
 static int l_export(lua_State *L)
 {
-    int n = 0;
+    int i;
     char const *val, *env = luaL_checkstring(L, 1);
     luaL_checktype(L, 2, LUA_TTABLE);
-    lua_pushnil(L);
-    while (lua_next(L, 2)) {
+    for (i = 1; lua_geti(L, 2, i) != LUA_TNIL; i++)
         lua_pushstring(L, ":");
-        lua_rotate(L, -3, -1);
-        n += 2;
-    }
     lua_pop(L, 1);
-    lua_concat(L, --n);
+    lua_concat(L, i * 2 - 3);
     val = lua_tostring(L, -1);
     lua_pop(L, 1);
     setenv(env, val, 1);
