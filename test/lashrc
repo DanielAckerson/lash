@@ -1,0 +1,16 @@
+os.execute("echo 'Welcome to lash!\n'")
+
+local mycoolvar = {"wowverycool"}
+export("mycoolvar", mycoolvar)
+
+local mycoolvar_imported = import("mycoolvar")
+for i,v in ipairs(mycoolvar_imported) do
+    print(i, v)
+end
+
+local path = import("PATH")
+for i,v in ipairs(path) do
+    print(v)
+end
+
+print(os.getenv("PATH"))
